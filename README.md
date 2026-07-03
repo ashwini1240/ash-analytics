@@ -3,6 +3,8 @@
 An immersive, data-themed portfolio for a pharma commercial-analytics
 professional. Built on Vite + React + Three.js.
 
+**Live:** https://ash-analytics.netlify.app — auto-deployed from `main` via Netlify.
+
 ## Two experiences, one dataset
 
 - **Immersive (3D):** a scroll-driven flight through a dark "data
