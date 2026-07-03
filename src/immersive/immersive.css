@@ -1,0 +1,280 @@
+.immersive {
+  position: fixed;
+  inset: 0;
+  transition: opacity 0.4s var(--ease), filter 0.4s var(--ease);
+}
+.immersive.is-dimmed {
+  opacity: 0.4;
+  filter: blur(2px) saturate(0.7);
+  pointer-events: none;
+}
+.immersive__canvas {
+  position: absolute;
+  inset: 0;
+}
+
+/* ── World-anchored annotation panels ──────────────────────── */
+.anno {
+  width: max-content;
+  max-width: 340px;
+  transition: opacity 0.2s linear;
+  user-select: none;
+}
+.anno__title {
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+  margin-top: 6px;
+  color: var(--text);
+}
+.anno__text {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+/* Hero */
+.anno--hero {
+  max-width: 560px;
+  text-align: center;
+  padding: 20px 32px;
+  /* Soft contrast backing (transparent at the edges — no visible box) so
+     the name always reads, even mid-transition. */
+  background: radial-gradient(
+    62% 68% at 50% 46%,
+    rgba(6, 10, 20, 0.6),
+    transparent 78%
+  );
+}
+.anno__name {
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: 12px 0 0;
+  color: var(--text);
+  text-shadow: 0 2px 40px rgba(6, 10, 20, 0.9);
+}
+.anno__tagline {
+  margin: 18px auto 0;
+  max-width: 34ch;
+  font-size: clamp(1rem, 2.4vw, 1.25rem);
+  color: var(--text);
+}
+.anno__meta {
+  margin-top: 14px;
+  font-size: 0.76rem;
+  letter-spacing: 0.05em;
+  color: var(--cyan);
+}
+
+/* Section headers floating by their station */
+.anno--section {
+  max-width: 300px;
+}
+
+/* Metric panels */
+.anno--metric {
+  --accent: var(--cyan);
+  display: flex;
+  flex-direction: column;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--line-bright);
+  background: rgba(9, 14, 26, 0.78);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 12px 40px -18px rgba(0, 0, 0, 0.9);
+  border-left: 3px solid var(--accent);
+  min-width: 150px;
+}
+.anno--metric.anno--amber {
+  --accent: var(--amber);
+}
+.anno--metric .metric-value {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.anno__metric-label {
+  margin-top: 4px;
+  font-weight: 500;
+  color: var(--text);
+  font-size: 0.92rem;
+}
+.anno__metric-detail {
+  margin-top: 2px;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+/* Project node card (clickable) */
+.anno--project {
+  --accent: var(--cyan);
+}
+.anno--project.anno--amber {
+  --accent: var(--amber);
+}
+.anno-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 230px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--line-bright);
+  background: rgba(9, 14, 26, 0.82);
+  backdrop-filter: blur(10px);
+  border-top: 3px solid var(--accent);
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.anno-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.anno-card .eyebrow {
+  color: var(--accent);
+}
+.anno-card__title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 4px;
+}
+.anno-card__title--muted {
+  color: var(--text-dim);
+  font-size: 1rem;
+}
+.anno-card__tagline {
+  font-size: 0.84rem;
+  color: var(--text-muted);
+}
+.anno-card__cta {
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--accent);
+}
+.anno--ghost {
+  opacity: 0.8;
+}
+
+/* Contact */
+.anno--contact {
+  max-width: 420px;
+  text-align: center;
+}
+.anno__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+/* ── HUD: station rail ─────────────────────────────────────── */
+.hud-rail {
+  position: fixed;
+  right: clamp(14px, 3vw, 30px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 55;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.hud-dot {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  background: none;
+  border: 0;
+  padding: 2px;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+.hud-dot__mark {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1px solid var(--line-bright);
+  background: transparent;
+  transition: all 0.25s var(--ease);
+  flex: none;
+}
+.hud-dot__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: all 0.25s var(--ease);
+  white-space: nowrap;
+}
+.hud-dot:hover .hud-dot__label,
+.hud-dot[data-active='true'] .hud-dot__label {
+  opacity: 1;
+  transform: translateX(0);
+}
+.hud-dot:hover .hud-dot__mark {
+  border-color: var(--cyan);
+}
+.hud-dot[data-active='true'] .hud-dot__mark {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan);
+}
+.hud-dot[data-active='true'] {
+  color: var(--text);
+}
+.hud-dot:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Scroll hint */
+.hud-hint {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  z-index: 55;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: opacity 0.4s var(--ease);
+  pointer-events: none;
+}
+.hud-hint__arrow {
+  width: 1px;
+  height: 22px;
+  background: linear-gradient(var(--cyan), transparent);
+  animation: hint 1.8s var(--ease) infinite;
+}
+@keyframes hint {
+  0% {
+    transform: translateY(-4px);
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(6px);
+    opacity: 0.3;
+  }
+}
+
+@media (max-width: 720px) {
+  .hud-dot__label {
+    display: none;
+  }
+}
