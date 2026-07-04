@@ -177,7 +177,10 @@
   margin-top: 18px;
 }
 
-/* ── HUD: station rail ─────────────────────────────────────── */
+/* ── HUD: station scale ────────────────────────────────────── */
+/* A vertical drafting-ruler: an ink spine with a graduation tick + mono
+   number per station. The active station reads as a redline dimension mark
+   terminated by a small diamond — the "cursor" on the scale. */
 .hud-rail {
   position: fixed;
   right: clamp(14px, 3vw, 30px);
@@ -186,58 +189,101 @@
   z-index: 55;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  padding-right: 9px;
 }
-.hud-dot {
+/* the ruler spine */
+.hud-rail::before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  bottom: 7px;
+  right: 0;
+  width: 1px;
+  background: var(--slate-soft);
+  opacity: 0.65;
+}
+.hud-tick {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 9px;
+  height: 30px;
+  padding: 0;
   background: none;
   border: 0;
-  padding: 2px;
   cursor: pointer;
   color: var(--text-muted);
 }
-.hud-dot__mark {
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  border: 1px solid var(--slate-soft);
-  background: transparent;
-  transition: all 0.25s var(--ease);
+/* graduation tick, drawn leftward from the spine */
+.hud-tick__mark {
+  position: relative;
+  height: 1px;
+  width: 11px;
+  background: var(--slate-soft);
+  transition: width 0.25s var(--ease), background 0.25s var(--ease),
+    height 0.25s var(--ease);
   flex: none;
 }
-.hud-dot__label {
+/* mono graduation number — always visible, like a scale's figures */
+.hud-tick__num {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  font-variant-numeric: tabular-nums;
+  transition: color 0.25s var(--ease);
+}
+/* station label — annotation that slides in on hover / active */
+.hud-tick__label {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: var(--ink);
   opacity: 0;
   transform: translateX(6px);
-  transition: all 0.25s var(--ease);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
   white-space: nowrap;
 }
-.hud-dot:hover .hud-dot__label,
-.hud-dot[data-active='true'] .hud-dot__label {
+.hud-tick:hover .hud-tick__mark {
+  width: 19px;
+  background: var(--slate);
+}
+.hud-tick:hover .hud-tick__num {
+  color: var(--slate);
+}
+.hud-tick:hover .hud-tick__label,
+.hud-tick[data-active='true'] .hud-tick__label {
   opacity: 1;
   transform: translateX(0);
 }
-.hud-dot:hover .hud-dot__mark {
-  border-color: var(--slate);
-}
-.hud-dot[data-active='true'] .hud-dot__mark {
-  background: var(--redline);
-  border-color: var(--redline);
-  box-shadow: 0 0 0 4px rgba(216, 64, 46, 0.16);
-}
-.hud-dot[data-active='true'] {
+/* active — redline dimension mark with a diamond terminator */
+.hud-tick[data-active='true'] {
   color: var(--ink);
 }
-.hud-dot:focus-visible {
+.hud-tick[data-active='true'] .hud-tick__mark {
+  width: 24px;
+  height: 1.5px;
+  background: var(--redline);
+}
+.hud-tick[data-active='true'] .hud-tick__mark::before {
+  content: '';
+  position: absolute;
+  left: -3px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translateY(-50%) rotate(45deg);
+  background: var(--redline);
+}
+.hud-tick[data-active='true'] .hud-tick__num {
+  color: var(--redline);
+}
+.hud-tick:focus-visible {
   outline: 2px solid var(--slate);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 /* Scroll hint */
@@ -279,7 +325,7 @@
 }
 
 @media (max-width: 720px) {
-  .hud-dot__label {
+  .hud-tick__label {
     display: none;
   }
 }

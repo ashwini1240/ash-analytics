@@ -57,13 +57,17 @@ function ScrollHud({ scrollState }) {
           <button
             key={label}
             type="button"
-            className="hud-dot"
+            className="hud-tick"
+            aria-label={label}
             ref={(el) => (dotsRef.current[i] = el)}
             data-active="false"
             onClick={() => goTo(i)}
           >
-            <span className="hud-dot__mark" aria-hidden="true" />
-            <span className="hud-dot__label">{label}</span>
+            <span className="hud-tick__label" aria-hidden="true">{label}</span>
+            <span className="hud-tick__num" aria-hidden="true">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <span className="hud-tick__mark" aria-hidden="true" />
           </button>
         ))}
       </nav>
