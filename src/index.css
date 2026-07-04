@@ -134,7 +134,7 @@ a {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(231, 234, 232, 0.85);
+  background: rgba(231, 234, 232, 0.92);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent);
