@@ -47,8 +47,7 @@ export default function ProjectsField({ onOpenProject }) {
               position={[0, -1.5, 0]}
               className={`anno--project anno--${p.accent}`}
               interactive
-              near={22}
-              far={32}
+              station={4}
             >
               <a
                 className="anno-card"
@@ -80,12 +79,12 @@ export default function ProjectsField({ onOpenProject }) {
             toneMapped={false}
           />
         </mesh>
-        <Annotation position={[0, -1.3, 0]} className="anno--ghost" near={20} far={28}>
+        <Annotation position={[0, -1.3, 0]} className="anno--ghost" station={4}>
           <span className="anno-card__title anno-card__title--muted">More soon</span>
         </Annotation>
       </group>
 
-      <Annotation position={[0, 3.4, 0]} className="anno--section" near={22} far={32}>
+      <Annotation position={[0, 3.4, 0]} className="anno--section" station={4}>
         <span className="eyebrow">Projects</span>
         <h2 className="anno__title">Work you can open</h2>
       </Annotation>

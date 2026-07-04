@@ -128,7 +128,7 @@ export default function ForecastSurface() {
         </mesh>
       </group>
 
-      <Annotation position={[-6.6, 5.2, 0]} className="anno--section" near={22} far={30}>
+      <Annotation position={[-6.6, 5.2, 0]} className="anno--section" station={1}>
         <span className="eyebrow">Forecasting</span>
         <h2 className="anno__title">Curves you can defend</h2>
         <p className="anno__text">

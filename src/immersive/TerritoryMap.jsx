@@ -81,7 +81,7 @@ export default function TerritoryMap() {
         </mesh>
       ))}
 
-      <Annotation position={[-6.4, 4.8, 3]} className="anno--section" near={22} far={30}>
+      <Annotation position={[-6.4, 4.8, 3]} className="anno--section" station={3}>
         <span className="eyebrow">Specialization · Pharma</span>
         <h2 className="anno__title">Where I proved it</h2>
         <p className="anno__text">

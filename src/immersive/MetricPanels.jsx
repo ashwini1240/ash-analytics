@@ -40,8 +40,7 @@ export default function MetricPanels() {
             <Annotation
               position={[x, y, z]}
               className={`anno--metric anno--${m.accent}`}
-              near={20}
-              far={30}
+              station={2}
             >
               <span className="metric-value">{m.value}</span>
               <span className="anno__metric-label">{m.label}</span>
@@ -51,7 +50,7 @@ export default function MetricPanels() {
         )
       })}
 
-      <Annotation position={[0, 6.7, 0]} className="anno--section" near={22} far={30}>
+      <Annotation position={[0, 6.7, 0]} className="anno--section" station={2}>
         <span className="eyebrow">Outcomes</span>
         <h2 className="anno__title">Measured, not asserted</h2>
       </Annotation>

@@ -1,40 +1,40 @@
 import { useRef } from 'react'
-import { Html } from '@react-three/drei'
+import { Html, useScroll } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { Vector3 } from 'three'
+import { STATION_COUNT } from './CameraRig'
 
-const tmp = new Vector3()
-const dir = new Vector3()
+// Fade window measured in "station-index" space (0..STATION_COUNT-1), driven
+// by scroll rather than raw camera distance. A panel is fully visible while
+// its own station is the active one, then cross-fades out *before* the next
+// station's panel fades in — so adjacent stations never pile up on the bright
+// paper. FULL: within this of the active index → solid. GONE: beyond this →
+// hidden. The narrow band between them is a crisp hand-off.
+const FULL = 0.26
+const GONE = 0.52
 
 // A styled panel anchored to a point in 3D space. It stays crisp and
 // screen-legible (billboarded, not perspective-warped) — the way an
-// annotation sits on top of a chart — and fades with distance so only the
-// station you're near is emphasized. Anything behind the camera (a station
-// you've already flown past) is culled so it can't linger or mirror.
+// annotation sits on top of a chart — and is shown only for its own station.
 export default function Annotation({
   position,
   children,
   className = '',
   interactive = false,
-  near = 18,
-  far = 30,
+  station = 0,
 }) {
   const ref = useRef(null)
+  const scroll = useScroll()
 
-  useFrame(({ camera }) => {
+  useFrame(() => {
     const el = ref.current
     if (!el) return
-    // Vector from camera to the anchor, and how far it sits *in front* of us.
-    tmp.set(...position).sub(camera.position)
-    camera.getWorldDirection(dir)
-    const forward = tmp.dot(dir)
-    const d = tmp.length()
+    const active = scroll.offset * (STATION_COUNT - 1)
+    const d = Math.abs(active - station)
 
     let o = 1
-    if (forward < 1) o = 0 // behind the camera (or right on top of it)
-    else if (d > far) o = 0
-    else if (d > near) o = 1 - (d - near) / (far - near)
-    o = Math.max(0, Math.min(1, o))
+    if (d > GONE) o = 0
+    else if (d > FULL) o = 1 - (d - FULL) / (GONE - FULL)
+
     el.style.opacity = o.toFixed(3)
     el.style.pointerEvents = interactive && o > 0.65 ? 'auto' : 'none'
   })

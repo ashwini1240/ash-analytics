@@ -39,7 +39,7 @@ export default function HeroStation() {
   return (
     <group>
       <Globe />
-      <Annotation position={[0, 2.1, 0]} className="anno--hero" near={20} far={28}>
+      <Annotation position={[0, 2.1, 0]} className="anno--hero" station={0}>
         <span className="eyebrow">Data · Modeling · Decision support</span>
         <h1 className="anno__name">{profile.name}</h1>
         <p className="anno__tagline">{profile.tagline}</p>

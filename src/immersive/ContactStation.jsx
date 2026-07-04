@@ -36,8 +36,7 @@ export default function ContactStation() {
         position={[0, 0, 0]}
         className="anno--contact"
         interactive
-        near={22}
-        far={30}
+        station={5}
       >
         <span className="eyebrow">Contact</span>
         <h2 className="anno__title">Let’s build the forecast.</h2>
