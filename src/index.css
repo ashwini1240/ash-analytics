@@ -125,6 +125,22 @@ a {
   padding: 16px clamp(16px, 4vw, 40px);
   pointer-events: none;
 }
+/* Frosted paper scrim so scrolled content (2D) and the 3D linework read
+   cleanly behind the brand + actions. Masked to fade out at the bottom —
+   no hard blur edge — and kept on a pseudo-element so the buttons/brand
+   stay fully opaque. */
+.topbar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(231, 234, 232, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent);
+  pointer-events: none;
+}
 .topbar > * {
   pointer-events: auto;
 }
