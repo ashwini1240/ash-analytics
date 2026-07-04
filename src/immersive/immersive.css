@@ -225,14 +225,17 @@
     height 0.25s var(--ease);
   flex: none;
 }
-/* mono graduation number — always visible, like a scale's figures */
+/* mono graduation number — revealed on hover / active, like the label */
 .hud-tick__num {
   font-family: var(--font-mono);
   font-size: 0.62rem;
   letter-spacing: 0.04em;
   color: var(--text-dim);
   font-variant-numeric: tabular-nums;
-  transition: color 0.25s var(--ease);
+  opacity: 0;
+  transform: translateX(4px);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease),
+    color 0.25s var(--ease);
 }
 /* station label — annotation that slides in on hover / active */
 .hud-tick__label {
@@ -252,6 +255,8 @@
 }
 .hud-tick:hover .hud-tick__num {
   color: var(--slate);
+  opacity: 1;
+  transform: translateX(0);
 }
 .hud-tick:hover .hud-tick__label,
 .hud-tick[data-active='true'] .hud-tick__label {
@@ -279,6 +284,8 @@
 }
 .hud-tick[data-active='true'] .hud-tick__num {
   color: var(--redline);
+  opacity: 1;
+  transform: translateX(0);
 }
 .hud-tick:focus-visible {
   outline: 2px solid var(--slate);
