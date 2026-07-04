@@ -20,7 +20,7 @@ export default function MetricPanels() {
     <group position={[0, 0, Z]}>
       {metrics.map((m, i) => {
         const [x, y, z] = spots[i]
-        const accent = m.accent === 'amber' ? theme.amber : theme.cyan
+        const accent = m.accent === 'redline' ? theme.redline : theme.slate
         return (
           <group key={m.label}>
             <Line
@@ -28,10 +28,10 @@ export default function MetricPanels() {
                 [x, 0.02, z],
                 [x, y - 0.4, z],
               ]}
-              color={accent}
+              color={theme.ink}
               lineWidth={1}
               transparent
-              opacity={0.35}
+              opacity={0.3}
             />
             <mesh position={[x, y - 0.4, z]}>
               <sphereGeometry args={[0.07, 16, 16]} />

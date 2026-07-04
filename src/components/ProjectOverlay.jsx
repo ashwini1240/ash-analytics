@@ -29,7 +29,7 @@ export default function ProjectOverlay() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug])
 
-  const accent = project?.accent === 'amber' ? 'amber' : 'cyan'
+  const accent = project?.accent === 'redline' ? 'redline' : 'slate'
 
   return (
     <div

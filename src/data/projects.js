@@ -13,7 +13,7 @@
 //   year      string   Display year/period.
 //   status    string   e.g. 'Live', 'In progress', 'Prototype'.
 //   domain    string   Short category, e.g. 'Revenue forecasting'.
-//   accent    'cyan' | 'amber'   Node/detail highlight color.
+//   accent    'slate' | 'redline'   Node/detail highlight color.
 //   methods   string[] Techniques/algorithms (chips).
 //   stack     string[] Tools/languages (chips).
 //   metrics   [{ value, label }]   Optional headline outcomes.
@@ -30,7 +30,7 @@ export const projects = [
     year: '2024',
     status: 'Live',
     domain: 'Revenue forecasting',
-    accent: 'cyan',
+    accent: 'slate',
     methods: ['Moving Average', 'Exponential Smoothing', 'Linear Regression'],
     stack: ['Python', 'pandas', 'Forecasting'],
     metrics: [

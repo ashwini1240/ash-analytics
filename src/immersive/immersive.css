@@ -21,10 +21,12 @@
   user-select: none;
 }
 .anno__title {
-  font-size: 1.5rem;
-  letter-spacing: -0.01em;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
   margin-top: 6px;
-  color: var(--text);
+  color: var(--ink);
 }
 .anno__text {
   margin-top: 8px;
@@ -33,38 +35,40 @@
   color: var(--text-muted);
 }
 
-/* Hero */
+/* Hero — a soft sheet of paper behind the name so it always reads
+   over the drafting linework, even mid-transition. */
 .anno--hero {
-  max-width: 560px;
+  max-width: 580px;
   text-align: center;
-  padding: 20px 32px;
-  /* Soft contrast backing (transparent at the edges — no visible box) so
-     the name always reads, even mid-transition. */
+  padding: 22px 34px;
   background: radial-gradient(
-    62% 68% at 50% 46%,
-    rgba(6, 10, 20, 0.6),
-    transparent 78%
+    64% 70% at 50% 46%,
+    rgba(244, 246, 244, 0.82),
+    rgba(244, 246, 244, 0) 78%
   );
 }
 .anno__name {
-  font-size: clamp(2.4rem, 6vw, 4.4rem);
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2.6rem, 6.4vw, 4.8rem);
+  letter-spacing: -0.015em;
   line-height: 1;
   margin: 12px 0 0;
-  color: var(--text);
-  text-shadow: 0 2px 40px rgba(6, 10, 20, 0.9);
+  color: var(--ink);
+  text-shadow: 0 1px 24px rgba(244, 246, 244, 0.95);
 }
 .anno__tagline {
   margin: 18px auto 0;
-  max-width: 34ch;
-  font-size: clamp(1rem, 2.4vw, 1.25rem);
-  color: var(--text);
+  max-width: 40ch;
+  font-size: clamp(1rem, 2.4vw, 1.22rem);
+  line-height: 1.4;
+  color: var(--ink-soft);
 }
 .anno__meta {
   margin-top: 14px;
   font-size: 0.76rem;
   letter-spacing: 0.05em;
-  color: var(--cyan);
+  color: var(--slate);
 }
 
 /* Section headers floating by their station */
@@ -72,33 +76,33 @@
   max-width: 300px;
 }
 
-/* Metric panels */
+/* Metric panels — white sheets pinned into the scene */
 .anno--metric {
-  --accent: var(--cyan);
+  --accent: var(--slate);
   display: flex;
   flex-direction: column;
   padding: 14px 18px;
-  border-radius: 14px;
-  border: 1px solid var(--line-bright);
-  background: rgba(9, 14, 26, 0.78);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 12px 40px -18px rgba(0, 0, 0, 0.9);
+  border-radius: 12px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 14px 34px -20px rgba(25, 27, 30, 0.5);
   border-left: 3px solid var(--accent);
   min-width: 150px;
 }
-.anno--metric.anno--amber {
-  --accent: var(--amber);
+.anno--metric.anno--redline {
+  --accent: var(--redline);
 }
 .anno--metric .metric-value {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 2.1rem;
+  font-weight: 500;
   color: var(--accent);
   letter-spacing: -0.02em;
 }
 .anno__metric-label {
   margin-top: 4px;
-  font-weight: 500;
-  color: var(--text);
+  font-weight: 600;
+  color: var(--ink);
   font-size: 0.92rem;
 }
 .anno__metric-detail {
@@ -109,10 +113,10 @@
 
 /* Project node card (clickable) */
 .anno--project {
-  --accent: var(--cyan);
+  --accent: var(--slate);
 }
-.anno--project.anno--amber {
-  --accent: var(--amber);
+.anno--project.anno--redline {
+  --accent: var(--redline);
 }
 .anno-card {
   display: flex;
@@ -120,11 +124,12 @@
   gap: 4px;
   width: 230px;
   padding: 16px 18px;
-  border-radius: 14px;
-  border: 1px solid var(--line-bright);
-  background: rgba(9, 14, 26, 0.82);
-  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(6px);
   border-top: 3px solid var(--accent);
+  box-shadow: 0 14px 34px -20px rgba(25, 27, 30, 0.5);
   transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
 }
 .anno-card:hover {
@@ -136,9 +141,9 @@
 }
 .anno-card__title {
   font-family: var(--font-display);
-  font-size: 1.35rem;
-  font-weight: 600;
-  color: var(--text);
+  font-size: 1.45rem;
+  font-weight: 500;
+  color: var(--ink);
   margin-top: 4px;
 }
 .anno-card__title--muted {
@@ -198,7 +203,7 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
-  border: 1px solid var(--line-bright);
+  border: 1px solid var(--slate-soft);
   background: transparent;
   transition: all 0.25s var(--ease);
   flex: none;
@@ -219,18 +224,18 @@
   transform: translateX(0);
 }
 .hud-dot:hover .hud-dot__mark {
-  border-color: var(--cyan);
+  border-color: var(--slate);
 }
 .hud-dot[data-active='true'] .hud-dot__mark {
-  background: var(--cyan);
-  border-color: var(--cyan);
-  box-shadow: 0 0 12px var(--cyan);
+  background: var(--redline);
+  border-color: var(--redline);
+  box-shadow: 0 0 0 4px rgba(216, 64, 46, 0.16);
 }
 .hud-dot[data-active='true'] {
-  color: var(--text);
+  color: var(--ink);
 }
 .hud-dot:focus-visible {
-  outline: 2px solid var(--cyan);
+  outline: 2px solid var(--slate);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -256,7 +261,7 @@
 .hud-hint__arrow {
   width: 1px;
   height: 22px;
-  background: linear-gradient(var(--cyan), transparent);
+  background: linear-gradient(var(--slate), transparent);
   animation: hint 1.8s var(--ease) infinite;
 }
 @keyframes hint {

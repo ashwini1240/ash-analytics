@@ -2,13 +2,13 @@
 export const profile = {
   name: 'Ashwini Kumar Singh',
   firstName: 'Ashwini',
-  role: 'Pharma Commercial Analytics',
+  role: 'Data & Decision Analytics',
   tagline:
-    'Forecasting, Sales Force Effectiveness and HCP analytics for global pharma — US, EU and APAC markets.',
+    'Forecasts, territory strategy, and analytics that stand up to scrutiny.',
   location: 'Pune, India',
   availability: 'Open to Hyderabad / Remote',
   summary:
-    'Commercial analytics professional specializing in pharmaceutical forecasting and sales-force strategy. I turn IQVIA-scale data into decisions: revenue forecasts, territory designs and HCP analytics that hold up under scrutiny.',
+    'I turn large, uncertain commercial data into decisions — revenue forecasts, territory design, and the models behind them. I built that depth over two years in global pharma at IQVIA scale, and the methods travel to any commercial analytics problem.',
   email: 'ashwin.singh1240@gmail.com',
   resumeUrl:
     'https://drive.google.com/file/d/1BNFkSWdo_Y3KOWgW0dnrdzRF7VdDfQr6/view?usp=drive_link',

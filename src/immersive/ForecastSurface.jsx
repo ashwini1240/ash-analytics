@@ -63,6 +63,9 @@ export default function ForecastSurface() {
   }, [])
 
   const fan = useMemo(buildFan, [])
+  // The "now" cut — where measured history ends and the forecast fans out.
+  // This is the one point the redline is allowed to mark.
+  const cutPoint = fan.base[0]
   const group = useRef(null)
 
   // Very slow breathing rotation — enough to read as a live surface,
@@ -76,47 +79,62 @@ export default function ForecastSurface() {
   return (
     <group position={[0, 0.7, Z]}>
       <group ref={group}>
-        {/* Solid dark underlay for body */}
+        {/* Faint paper underlay so the surface reads as a solid sheet */}
         <mesh geometry={geo}>
           <meshStandardMaterial
-            color="#0a1730"
+            color={theme.sheet}
             transparent
-            opacity={0.62}
-            roughness={0.85}
-            metalness={0.2}
+            opacity={0.4}
+            roughness={1}
+            metalness={0}
             side={DoubleSide}
           />
         </mesh>
-        {/* Wireframe mesh — the "surface" reading */}
+        {/* Wireframe mesh drawn in ink — the "surface" reading */}
         <mesh geometry={geo}>
           <meshBasicMaterial
-            color={theme.cyan}
+            color={theme.ink}
             wireframe
             transparent
-            opacity={0.3}
+            opacity={0.22}
           />
         </mesh>
 
-        {/* Forecast fan overlaid on the crest */}
-        <Line points={fan.history} color={theme.cyan} lineWidth={2.4} />
+        {/* Forecast fan plotted over the crest: ink history, slate forecast */}
+        <Line points={fan.history} color={theme.ink} lineWidth={2.4} />
         <Line
           points={fan.base}
-          color={theme.amber}
+          color={theme.slate}
           lineWidth={2.4}
           dashed
           dashSize={0.35}
           gapSize={0.2}
         />
-        <Line points={fan.up} color={theme.amber} lineWidth={1} transparent opacity={0.5} />
-        <Line points={fan.down} color={theme.amber} lineWidth={1} transparent opacity={0.5} />
+        <Line points={fan.up} color={theme.slate} lineWidth={1} transparent opacity={0.45} />
+        <Line points={fan.down} color={theme.slate} lineWidth={1} transparent opacity={0.45} />
+
+        {/* The redline: marks the "now" cut where forecast begins */}
+        <Line
+          points={[
+            [cutPoint[0], cutPoint[1] - 1.1, 0],
+            [cutPoint[0], cutPoint[1] + 1.1, 0],
+          ]}
+          color={theme.redline}
+          lineWidth={1.4}
+        />
+        <mesh position={cutPoint}>
+          <sphereGeometry args={[0.09, 16, 16]} />
+          <meshBasicMaterial color={theme.redline} toneMapped={false} />
+        </mesh>
       </group>
 
       <Annotation position={[-6.6, 5.2, 0]} className="anno--section" near={22} far={30}>
         <span className="eyebrow">Forecasting</span>
         <h2 className="anno__title">Curves you can defend</h2>
         <p className="anno__text">
-          ARIMA/SARIMA, patient-flow and scenario models — history, base case
-          and an upside/downside band, read as one surface.
+          ARIMA/SARIMA and scenario models — history, base case and an
+          upside/downside band, read as one surface. The redline marks where
+          fact ends and forecast begins.
         </p>
       </Annotation>
     </group>

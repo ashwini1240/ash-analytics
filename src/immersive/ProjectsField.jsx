@@ -39,7 +39,7 @@ export default function ProjectsField({ onOpenProject }) {
     <group position={[0, 2.4, Z]}>
       {projects.map((p, i) => {
         const x = xAt(i)
-        const accent = p.accent === 'amber' ? theme.amber : theme.cyan
+        const accent = p.accent === 'redline' ? theme.redline : theme.slate
         return (
           <group key={p.slug} position={[x, 0, 0]}>
             <ProjectMarker color={accent} />
@@ -73,10 +73,10 @@ export default function ProjectsField({ onOpenProject }) {
         <mesh>
           <octahedronGeometry args={[0.42, 0]} />
           <meshBasicMaterial
-            color="#5c6b80"
+            color={theme.slateSoft}
             wireframe
             transparent
-            opacity={0.35}
+            opacity={0.5}
             toneMapped={false}
           />
         </mesh>

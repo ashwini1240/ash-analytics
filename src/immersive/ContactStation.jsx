@@ -17,12 +17,12 @@ function ClosingMotif() {
   return (
     <group ref={ref} position={[0, 0.3, -2.6]}>
       <mesh>
-        <torusGeometry args={[4.2, 0.01, 8, 120]} />
-        <meshBasicMaterial color={theme.cyan} transparent opacity={0.14} />
+        <torusGeometry args={[4.2, 0.012, 8, 120]} />
+        <meshBasicMaterial color={theme.slate} transparent opacity={0.28} />
       </mesh>
       <mesh rotation={[Math.PI / 2.3, 0, 0]}>
-        <torusGeometry args={[5.6, 0.008, 8, 120]} />
-        <meshBasicMaterial color={theme.amber} transparent opacity={0.1} />
+        <torusGeometry args={[5.6, 0.01, 8, 120]} />
+        <meshBasicMaterial color={theme.redline} transparent opacity={0.22} />
       </mesh>
     </group>
   )

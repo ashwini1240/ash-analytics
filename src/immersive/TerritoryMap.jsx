@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import { Instances, Instance, Line } from '@react-three/drei'
-import { Color } from 'three'
+import { Edges, Line } from '@react-three/drei'
+import { Color, MathUtils } from 'three'
 import { stationZ, theme } from '../theme'
 import Annotation from './Annotation'
 
@@ -22,12 +22,13 @@ const BORDER = [
   [-HW, 0.05, -HD],
 ]
 
-// A 3D territory heat-field: a grid of extruded tiles whose height and
-// color encode intensity — the way an aligned sales geography looks when
-// you stack opportunity on top of it.
+// A 3D territory as an architectural massing model: paper-white extrusions
+// with fine ink edges. Opportunity is read by HEIGHT (the way a scale model
+// sits on a drafting table); only the hottest cluster picks up a faint
+// redline wash, so the eye still lands on where the opportunity concentrates.
 function buildTiles() {
-  const low = new Color(theme.cyanDim)
-  const high = new Color(theme.amber)
+  const paper = new Color(theme.sheet)
+  const hot = new Color(theme.redlineSoft)
   const tiles = []
   const cx = (COLS - 1) / 2
   const cz = (ROWS - 1) / 2
@@ -43,7 +44,9 @@ function buildTiles() {
         Math.max(0, 1 - d2 / 4) * 0.7 +
         (c / COLS) * 0.15
       const value = Math.min(1, v)
-      const color = low.clone().lerp(high, value)
+      // Redline wash reserved for the hot cluster only.
+      const wash = MathUtils.smoothstep(value, 0.55, 1) * 0.72
+      const color = paper.clone().lerp(hot, wash)
       tiles.push({
         x,
         z,
@@ -63,35 +66,28 @@ export default function TerritoryMap() {
       {/* Footprint plate + border so the field reads as a bounded map */}
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.015, 0]}>
         <planeGeometry args={[PLATE_W, PLATE_D]} />
-        <meshBasicMaterial color="#08111f" transparent opacity={0.5} />
+        <meshBasicMaterial color={theme.sheet} transparent opacity={0.55} />
       </mesh>
-      <Line points={BORDER} color={theme.cyanDim} lineWidth={1} transparent opacity={0.6} />
+      <Line points={BORDER} color={theme.slate} lineWidth={1} transparent opacity={0.7} />
 
-      <Instances limit={COLS * ROWS} castShadow={false}>
-        <boxGeometry args={[0.82, 1, 0.82]} />
-        <meshStandardMaterial
-          roughness={0.45}
-          metalness={0.1}
-          emissive={theme.cyanDim}
-          emissiveIntensity={0.18}
-          toneMapped={false}
-        />
-        {tiles.map((t, i) => (
-          <Instance
-            key={i}
-            position={[t.x, t.h / 2, t.z]}
-            scale={[1, t.h, 1]}
-            color={t.color}
-          />
-        ))}
-      </Instances>
+      {/* Individual extrusions (not instanced) so each carries its own ink
+          edge — the line that makes it read as a paper model. 88 simple,
+          shadow-free boxes stays light on integrated GPUs. */}
+      {tiles.map((t, i) => (
+        <mesh key={i} position={[t.x, t.h / 2, t.z]} scale={[1, t.h, 1]}>
+          <boxGeometry args={[0.82, 1, 0.82]} />
+          <meshStandardMaterial color={t.color} roughness={0.92} metalness={0} />
+          <Edges threshold={15} color={theme.inkSoft} />
+        </mesh>
+      ))}
 
       <Annotation position={[-6.4, 4.8, 3]} className="anno--section" near={22} far={30}>
-        <span className="eyebrow">Territory design</span>
-        <h2 className="anno__title">Geography, balanced</h2>
+        <span className="eyebrow">Specialization · Pharma</span>
+        <h2 className="anno__title">Where I proved it</h2>
         <p className="anno__text">
-          Aligning ~$25B of portfolio across the field force — workload and
-          opportunity weighed tile by tile, US · EU · APAC.
+          Two years aligning ~$25B of pharma portfolio across the field force —
+          workload and opportunity weighed tile by tile, at IQVIA scale,
+          US · EU · APAC.
         </p>
       </Annotation>
     </group>

@@ -27,7 +27,7 @@ export default function FallbackExperience({ dimmed = false, quiet = false }) {
 
       {/* Hero */}
       <section className="section hero">
-        <p className="eyebrow">Commercial Analytics · Pharma</p>
+        <p className="eyebrow">Data · Modeling · Decision support</p>
         <h1 className="hero__name">{profile.name}</h1>
         <p className="hero__tagline">{profile.tagline}</p>
         <p className="hero__location mono">
@@ -109,7 +109,7 @@ export default function FallbackExperience({ dimmed = false, quiet = false }) {
               </ul>
               {job.award && (
                 <p className="exp__award">
-                  <span className="chip chip--amber">Award</span> {job.award}
+                  <span className="chip chip--redline">Award</span> {job.award}
                 </p>
               )}
             </article>

@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { ScrollControls } from '@react-three/drei'
+import { ScrollControls, PerformanceMonitor } from '@react-three/drei'
 import { Link, useNavigate } from 'react-router-dom'
 import { theme } from '../theme'
 import { profile } from '../data/profile'
@@ -78,6 +78,9 @@ function ScrollHud({ scrollState }) {
 export default function ImmersiveExperience({ dimmed = false }) {
   const scrollState = useRef({ offset: 0, el: null })
   const navigate = useNavigate()
+  // Device pixel ratio is driven by live performance: start crisp, but drop
+  // resolution (not frames) on integrated / low-end GPUs before they stutter.
+  const [dpr, setDpr] = useState(1.6)
   // Bound outside the Canvas: router context doesn't cross into r3f.
   const onOpenProject = useCallback(
     (slug) => navigate(`/projects/${slug}`),
@@ -89,14 +92,22 @@ export default function ImmersiveExperience({ dimmed = false }) {
       <div className="immersive__canvas" aria-hidden="true">
         <Canvas
           camera={{ position: [0, 2.2, 11], fov: 52, near: 0.1, far: 220 }}
-          dpr={[1, 1.8]}
+          dpr={dpr}
           gl={{ antialias: true, powerPreference: 'high-performance' }}
         >
+          {/* Bright architect's-paper world. Distance fades into a cool
+              blue-grey wash so the far stations keep their depth. */}
           <color attach="background" args={[theme.bg]} />
-          <fog attach="fog" args={[theme.bgDeep, 26, 135]} />
-          <ambientLight intensity={0.65} />
-          <directionalLight position={[6, 12, 4]} intensity={0.55} color={theme.cyan} />
-          <directionalLight position={[-8, 6, -30]} intensity={0.3} color={theme.amber} />
+          <fog attach="fog" args={[theme.haze, 34, 150]} />
+          {/* Neutral daylight: enough directional shape to read the paper
+              massing model, no colored glow. */}
+          <ambientLight intensity={0.85} />
+          <directionalLight position={[6, 13, 6]} intensity={0.7} color="#ffffff" />
+          <directionalLight position={[-8, 5, -24]} intensity={0.22} color={theme.slateSoft} />
+          <PerformanceMonitor
+            onDecline={() => setDpr(1)}
+            onIncline={() => setDpr(1.75)}
+          />
           <ScrollControls pages={7} damping={0.3}>
             <Scene scrollState={scrollState} onOpenProject={onOpenProject} />
           </ScrollControls>
